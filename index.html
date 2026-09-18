@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Invoicing & XML Bridge for Legacy ERPs | MRP, Softip, VEMA, DBF</title>
+    <style>
+        :root {
+            --bg-main: #0B0F17;
+            --bg-card: #151C28;
+            --bg-card-hover: #1C2637;
+            --border: #232D3F;
+            --accent: #2563EB;
+            --accent-hover: #1D4ED8;
+            --accent-glow: rgba(37, 99, 235, 0.25);
+            --text-title: #F8FAFC;
+            --text-body: #94A3B8;
+            --text-muted: #64748B;
+            --success: #10B981;
+            --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-title);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* NAVBAR / LANG SWITCHER */
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 0 0;
+        }
+
+        .lang-switcher {
+            display: inline-flex;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn.active {
+            background-color: var(--accent);
+            color: #FFFFFF;
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: var(--text-title);
+            background-color: var(--bg-card-hover);
+        }
+
+        /* HEADER & HERO */
+        header {
+            padding: 40px 0 40px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid var(--border);
+            color: #60A5FA;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #CBD5E1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-body);
+            max-width: 760px;
+            margin: 0 auto 36px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #FFFFFF;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-card);
+            color: var(--text-title);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-card-hover);
+            border-color: var(--text-muted);
+        }
+
+        /* SECTION COMMON */
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: var(--text-body);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* CORE PILIARS / FEATURES */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #60A5FA;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--text-body);
+            font-size: 0.95rem;
+        }
+
+        /* SYSTEM TABS & COMPATIBILITY */
+        .system-tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-body);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: var(--accent);
+            color: #FFFFFF;
+            border-color: var(--accent);
+        }
+
+        .system-content {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .system-panel {
+            display: none;
+        }
+
+        .system-panel.active {
+            display: block;
+        }
+
+        .system-panel h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #60A5FA;
+        }
+
+        .system-panel p {
+            color: var(--text-body);
+            margin-bottom: 20px;
+        }
+
+        .system-specs {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .system-specs li {
+            background-color: var(--bg-main);
+            padding: 12px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-title);
+        }
+
+        /* WORKFLOW / PROCESS */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .step-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+        }
+
+        .step-num {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #60A5FA;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .step-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .step-card p {
+            color: var(--text-body);
+            font-size: 0.9rem;
+        }
+
+        /* DIRECT CONTACT BOX */
+        .contact-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 48px 40px;
+            max-width: 680px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-box h2 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .contact-box p {
+            color: var(--text-body);
+            margin-bottom: 28px;
+        }
+
+        .email-display {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #60A5FA;
+            letter-spacing: 0.03em;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 30px 0 20px; }
+            .contact-box { padding: 32px 20px; }
+            .email-display { font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- LANG SWITCHER -->
+        <nav>
+            <div class="lang-switcher">
+                <a href="index.html" class="lang-btn">SK</a>
+                <a href="index-en.html" class="lang-btn active">EN</a>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <header>
+            <div class="badge">
+                <span class="badge-dot"></span>
+                Guaranteed Deployment Within 10 Business Days
+            </div>
+            <h1>E-Invoicing & XML Integration for Legacy ERP Systems</h1>
+            <p class="hero-subtitle">
+                Meet statutory e-invoicing compliance (ePostak / ISDOC / UBL) without replacing your existing software, disrupting operations, or retraining staff.
+            </p>
+            <div class="hero-cta">
+                <button type="button" onclick="scrollToElement('contact-sec')" class="btn btn-primary">Check Compatibility</button>
+                <button type="button" onclick="scrollToElement('systems-sec')" class="btn btn-secondary">Supported Systems</button>
+            </div>
+        </header>
+
+        <!-- CORE PILLARS -->
+        <section>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">§</div>
+                    <h3>Legal Compliance (ISDOC / UBL)</h3>
+                    <p>Automated generation of 100% valid XML schemas ready for national e-invoicing systems and B2B exchange.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Zero Operational Impact</h3>
+                    <p>Your accounting team continues using their familiar legacy interfaces. No workflow adjustments required.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Background Automation</h3>
+                    <p>Real-time monitoring and XML conversion run automatically without requiring manual exports or data re-entry.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUPPORTED SYSTEMS -->
+        <section id="systems-sec">
+            <div class="section-title">
+                <h2>Supported Databases & Systems</h2>
+                <p>Safe, read-only extraction directly from local databases with zero risk of data corruption.</p>
+            </div>
+
+            <div class="system-tabs">
+                <button type="button" class="tab-btn active" onclick="switchTab('mrp-dos', this)">MRP (DOS)</button>
+                <button type="button" class="tab-btn" onclick="switchTab('mrp-vizual', this)">MRP Visual</button>
+                <button type="button" class="tab-btn" onclick="switchTab('softip', this)">Softip</button>
+                <button type="button" class="tab-btn" onclick="switchTab('vema', this)">VEMA</button>
+                <button type="button" class="tab-btn" onclick="switchTab('dbf', this)">dBase / FoxPro</button>
+                <button type="button" class="tab-btn" onclick="switchTab('custom', this)">Custom Software</button>
+            </div>
+
+            <div class="system-content">
+                <div id="mrp-dos" class="system-panel active">
+                    <h3>MRP DOS / Legacy Versions</h3>
+                    <p>Direct extraction of invoice headers and line items from local `.dbf` files without modifying original legacy software.</p>
+                    <ul class="system-specs">
+                        <li><strong>Method:</strong> Read-only DBF parser</li>
+                        <li><strong>Output:</strong> ISDOC / UBL / Custom XML</li>
+                        <li><strong>Execution:</strong> Background daemon / scheduler</li>
+                    </ul>
+                </div>
+
+                <div id="mrp-vizual" class="system-panel">
+                    <h3>MRP Visual System</h3>
+                    <p>Connector designed for visual MRP builds. Real-time extraction of issued invoices directly from database storage.</p>
+                    <ul class="system-specs">
+                        <li><strong>Method:</strong> Database Connector / DBF</li>
+                        <li><strong>Output:</strong> Validated XML</li>
+                        <li><strong>Execution:</strong> Automatic event-driven process</li>
+                    </ul>
+                </div>
+
+                <div id="softip" class="system-panel">
+                    <h3>Softip (Legacy Systems)</h3>
+                    <p>Tailored solution for older Softip releases. Intercepts billing data safely without requiring expensive module upgrades.</p>
+                    <ul class="system-specs">
+                        <li><strong>Method:</strong> Data Bridge Service</li>
+                        <li><strong>Output:</strong> Structured XML</li>
+                        <li><strong>Execution:</strong> Windows / Linux background service</li>
+                    </ul>
+                </div>
+
+                <div id="vema" class="system-panel">
+                    <h3>VEMA ERP</h3>
+                    <p>Data extraction for companies relying on VEMA software lacking native REST API or modern XML export features.</p>
+                    <ul class="system-specs">
+                        <li><strong>Method:</strong> Direct file reader</li>
+                        <li><strong>Output:</strong> ISDOC XML</li>
+                        <li><strong>Execution:</strong> Batch or instant execution</li>
+                    </ul>
+                </div>
+
+                <div id="dbf" class="system-panel">
+                    <h3>dBase / Visual FoxPro (.dbf)</h3>
+                    <p>Universal connector for in-house desktop applications built on custom DBF file structures.</p>
+                    <ul class="system-specs">
+                        <li><strong>Method:</strong> Custom DBF schema mapping</li>
+                        <li><strong>Output:</strong> e-Invoice / Custom XML</li>
+                        <li><strong>Execution:</strong> Fully customized bridge</li>
+                    </ul>
+                </div>
+
+                <div id="custom" class="system-panel">
+                    <h3>In-House / Proprietary ERP</h3>
+                    <p>For custom legacy enterprise systems without documentation. We reverse-engineer database schemas to build reliable exporters.</p>
+                    <ul class="system-specs">
+                        <li><strong>Method:</strong> Database schema reverse-engineering</li>
+                        <li><strong>Output:</strong> Fully compliant XML</li>
+                        <li><strong>Execution:</strong> Custom connector development</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPLEMENTATION PROCESS -->
+        <section>
+            <div class="section-title">
+                <h2>Deployment Roadmap</h2>
+                <p>From initial database analysis to fully automated XML generation within 10 days.</p>
+            </div>
+
+            <div class="process-steps">
+                <div class="step-card">
+                    <div class="step-num">Step 01</div>
+                    <h4>Database Audit</h4>
+                    <p>We review your DBF/SQL structure and verify that all mandatory invoice fields are accessible.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">Step 02</div>
+                    <h4>Connector Development</h4>
+                    <p>We write a custom script mapped to your exact fields and configure strict XML schema validation.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">Step 03</div>
+                    <h4>Staging Test</h4>
+                    <p>We run the integration in a test environment to verify XML validity against national validation tools.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">Step 04</div>
+                    <h4>Production Launch</h4>
+                    <p>Background automation is enabled. Your system emits compliant e-invoices with zero manual intervention.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact-sec">
+            <div class="contact-box">
+                <h2>Verify Your System Compatibility</h2>
+                <p>Tell us which ERP or internal software you use. We will confirm integration options within 24 hours.</p>
+
+                <div class="email-display">
+                    ✉️ krsoft.tools@gmail.com
+                </div>
+
+                <div class="action-buttons">
+                    <button type="button" onclick="openEmail()" class="btn btn-primary" style="font-size: 1rem;">
+                        Open Email Client
+                    </button>
+
+                    <button type="button" onclick="copyEmail()" id="copy-btn" class="btn btn-secondary" style="font-size: 0.95rem;">
+                        📋 Copy Email to Clipboard
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>&copy; 2026 Róbert Krečmer – Freelance Software Engineer. B2B Data Automation & Legacy ERP Integrations.</p>
+        </footer>
+    </div>
+
+    <script>
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.system-panel').forEach(panel => panel.classList.remove('active'));
+
+            btnElement.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function scrollToElement(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function openEmail() {
+            window.location.href = 'mailto:krsoft.tools@gmail.com';
+        }
+
+        function copyEmail() {
+            const email = 'krsoft.tools@gmail.com';
+            navigator.clipboard.writeText(email).then(() => {
+                const btn = document.getElementById('copy-btn');
+                btn.innerText = '✅ Address Copied!';
+                btn.style.borderColor = '#10B981';
+                btn.style.color = '#10B981';
+                setTimeout(() => {
+                    btn.innerText = '📋 Copy Email to Clipboard';
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                }, 3000);
+            }).catch(err => {
+                alert('Email address: krsoft.tools@gmail.com');
+            });
+        }
+    </script>
+</body>
+</html>
