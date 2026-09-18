@@ -371,8 +371,8 @@
                 Spĺňajte zákonné požiadavky na e-faktúru (ePostak / ISDOC) bez nutnosti meniť zabehnutý softvér, prerušovať prevádzku alebo preškoľovať ekonomický tím.
             </p>
             <div class="hero-cta">
-                <a href="#kontakt" class="btn btn-primary">Konzultovať kompatibilitu</a>
-                <a href="#systemy" class="btn btn-secondary">Podporované systémy</a>
+                <button type="button" onclick="scrollToElement('kontakt-sec')" class="btn btn-primary">Konzultovať kompatibilitu</button>
+                <button type="button" onclick="scrollToElement('systemy-sec')" class="btn btn-secondary">Podporované systémy</button>
             </div>
         </header>
 
@@ -398,19 +398,19 @@
         </section>
 
         <!-- PODPOROVANÉ SYSTÉMY -->
-        <section id="systemy">
+        <section id="systemy-sec">
             <div class="section-title">
                 <h2>Podporované databázy a systémy</h2>
                 <p>Bezpečné čítanie dát priamo z lokálnych databáz bez rizika poškodenia existujúcej evidencie.</p>
             </div>
 
             <div class="system-tabs">
-                <button class="tab-btn active" onclick="switchTab('mrp-dos', this)">MRP (DOS)</button>
-                <button class="tab-btn" onclick="switchTab('mrp-vizual', this)">MRP Vizuálny</button>
-                <button class="tab-btn" onclick="switchTab('softip', this)">Softip</button>
-                <button class="tab-btn" onclick="switchTab('vema', this)">VEMA</button>
-                <button class="tab-btn" onclick="switchTab('dbf', this)">dBase / FoxPro</button>
-                <button class="tab-btn" onclick="switchTab('custom', this)">Vlastný softvér</button>
+                <button type="button" class="tab-btn active" onclick="switchTab('mrp-dos', this)">MRP (DOS)</button>
+                <button type="button" class="tab-btn" onclick="switchTab('mrp-vizual', this)">MRP Vizuálny</button>
+                <button type="button" class="tab-btn" onclick="switchTab('softip', this)">Softip</button>
+                <button type="button" class="tab-btn" onclick="switchTab('vema', this)">VEMA</button>
+                <button type="button" class="tab-btn" onclick="switchTab('dbf', this)">dBase / FoxPro</button>
+                <button type="button" class="tab-btn" onclick="switchTab('custom', this)">Vlastný softvér</button>
             </div>
 
             <div class="system-content">
@@ -507,8 +507,8 @@
             </div>
         </section>
 
-        <!-- KONTAKTNÁ SEKCIA (DIRECT MAILTO + COPY) -->
-        <section id="kontakt">
+        <!-- KONTAKTNÁ SEKCIA -->
+        <section id="kontakt-sec">
             <div class="contact-box">
                 <h2>Preveriť kompatibilitu Vášho systému</h2>
                 <p>Napíšte nám, aký účtovný alebo interný systém používate. Do 24 hodín Vám potvrdíme možnosti prepojenia.</p>
@@ -518,9 +518,9 @@
                 </div>
 
                 <div class="action-buttons">
-                    <a href="mailto:krsoft.tools@gmail.com" class="btn btn-primary" style="font-size: 1rem;">
+                    <button type="button" onclick="openEmail()" class="btn btn-primary" style="font-size: 1rem;">
                         Otvoriť e-mailový klient
-                    </a>
+                    </button>
 
                     <button type="button" onclick="copyEmail()" id="copy-btn" class="btn btn-secondary" style="font-size: 0.95rem;">
                         📋 Skopírovať e-mail do schránky
@@ -544,6 +544,17 @@
             document.getElementById(tabId).classList.add('active');
         }
 
+        function scrollToElement(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function openEmail() {
+            window.location.href = 'mailto:krsoft.tools@gmail.com';
+        }
+
         function copyEmail() {
             const email = 'krsoft.tools@gmail.com';
             navigator.clipboard.writeText(email).then(() => {
@@ -556,6 +567,8 @@
                     btn.style.borderColor = '';
                     btn.style.color = '';
                 }, 3000);
+            }).catch(err => {
+                alert('E-mailová adresa: krsoft.tools@gmail.com');
             });
         }
     </script>
