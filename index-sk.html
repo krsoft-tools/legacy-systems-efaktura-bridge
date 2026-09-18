@@ -42,9 +42,45 @@
             padding: 0 24px;
         }
 
+        /* NAVBAR / LANG SWITCHER */
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 0 0;
+        }
+
+        .lang-switcher {
+            display: inline-flex;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn.active {
+            background-color: var(--accent);
+            color: #FFFFFF;
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: var(--text-title);
+            background-color: var(--bg-card-hover);
+        }
+
         /* HEADER & HERO */
         header {
-            padding: 60px 0 40px;
+            padding: 40px 0 40px;
             text-align: center;
         }
 
@@ -351,7 +387,7 @@
         }
 
         @media (max-width: 768px) {
-            header { padding: 40px 0 20px; }
+            header { padding: 30px 0 20px; }
             .contact-box { padding: 32px 20px; }
             .email-display { font-size: 1.05rem; }
         }
@@ -360,6 +396,14 @@
 <body>
 
     <div class="container">
+        <!-- LANG SWITCHER -->
+        <nav>
+            <div class="lang-switcher">
+                <a href="index.html" class="lang-btn active">SK</a>
+                <a href="index-en.html" class="lang-btn">EN</a>
+            </div>
+        </nav>
+
         <!-- HERO -->
         <header>
             <div class="badge">
