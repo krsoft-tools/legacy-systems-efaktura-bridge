@@ -383,7 +383,7 @@
             </div>
             <h1>E-fakturácia pre MRP a staršie účtovné systémy</h1>
             <p class="hero-subtitle">
-                Spĺňajte zákonné požiadavky na e-faktúru (ePostak / ISDOC) bez nutnosti menit zabehnutý softvér, prerušovať prevádzku alebo preškoľovať ekonomický tím.
+                Spĺňajte zákonné požiadavky na e-faktúru (ePostak / ISDOC) bez nutnosti meniť zabehnutý softvér, prerušovať prevádzku alebo preškoľovať ekonomický tím.
             </p>
             <div class="hero-cta">
                 <a href="#kontakt" class="btn btn-primary">Konzultovať kompatibilitu</a>
@@ -420,12 +420,12 @@
             </div>
 
             <div class="system-tabs">
-                <button class="tab-btn active" onclick="switchTab('mrp-dos')">MRP (DOS)</button>
-                <button class="tab-btn" onclick="switchTab('mrp-vizual')">MRP Vizuálny</button>
-                <button class="tab-btn" onclick="switchTab('softip')">Softip</button>
-                <button class="tab-btn" onclick="switchTab('vema')">VEMA</button>
-                <button class="tab-btn" onclick="switchTab('dbf')">dBase / FoxPro</button>
-                <button class="tab-btn" onclick="switchTab('custom')">Vlastný softvér</button>
+                <button class="tab-btn active" onclick="switchTab('mrp-dos', this)">MRP (DOS)</button>
+                <button class="tab-btn" onclick="switchTab('mrp-vizual', this)">MRP Vizuálny</button>
+                <button class="tab-btn" onclick="switchTab('softip', this)">Softip</button>
+                <button class="tab-btn" onclick="switchTab('vema', this)">VEMA</button>
+                <button class="tab-btn" onclick="switchTab('dbf', this)">dBase / FoxPro</button>
+                <button class="tab-btn" onclick="switchTab('custom', this)">Vlastný softvér</button>
             </div>
 
             <div class="system-content">
@@ -460,7 +460,7 @@
                 </div>
 
                 <div id="vema" class="system-panel">
-                    <h3>KROS VEMA</h3>
+                    <h3>VEMA</h3>
                     <p>Extrakcia fakturačných a účtovných podkladov pre firmy využívajúce systémy VEMA bez podpory moderného API konektora.</p>
                     <ul class="system-specs">
                         <li><strong>Metóda:</strong> Priame čítanie dátových súborov</li>
@@ -483,7 +483,7 @@
                     <h3>Špeciálny interný / Vlastný softvér</h3>
                     <p>Ak máte vnútrofiremný systém vyvinutý na mieru bez dokumentácie, mapujeme databázové tabuľky a napojíme export priamo.</p>
                     <ul class="system-specs">
-                        <li><strong>Metóda:</strong> Reverzná analýza schéma DB</li>
+                        <li><strong>Metóda:</strong> Reverzná analýza schémy DB</li>
                         <li><strong>Výstup:</strong> Validné XML</li>
                         <li><strong>Režim:</strong> Zákazkový vývoj konektora</li>
                     </ul>
@@ -522,73 +522,54 @@
             </div>
         </section>
 
-        <!-- KONTAKTNÝ FORMULÁR -->
         <!-- KONTAKTNÁ SEKCIA -->
-<section id="kontakt">
-    <div class="contact-box">
-        <h2>Preverte kompatibilitu vášho systému</h2>
-        <p>Napíšte mi, aký účtovný alebo interný systém používate. Do 24 hodín vám potvrdím možnosti prepojenia.</p>
+        <section id="kontakt">
+            <div class="contact-box">
+                <h2>Preverte kompatibilitu vášho systému</h2>
+                <p>Napíšte mi, aký účtovný alebo interný systém používate. Do 24 hodín vám potvrdím možnosti prepojenia.</p>
 
-        <!-- MOŽNOSŤ 1: Zabezpečený webový formulár -->
-        <form class="contact-form" action="https://formsubmit.co/kontakt@krecmer.sk" method="POST">
-            <!-- Nastavenia pre FormSubmit -->
-            <input type="hidden" name="_next" value="https://krsoft-tools.github.io/legacy-systems-efaktura-bridge/index-sk.html?status=success">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_subject" value="Nová správa z webu - Legacy E-faktúra Bridge">
+                <!-- MOŽNOSŤ 1: Zabezpečený webový formulár -->
+                <form class="contact-form" action="https://formsubmit.co/kontakt@krecmer.sk" method="POST">
+                    <input type="hidden" name="_next" value="https://krsoft-tools.github.io/legacy-systems-efaktura-bridge/index-sk.html?status=success">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_subject" value="Nová správa z webu - Legacy E-faktúra Bridge">
 
-            <div class="form-group">
-                <label for="email">Váš e-mail / Telefón</label>
-                <input type="text" id="email" name="kontakt" class="form-control" placeholder="meno@firma.sk" required>
+                    <div class="form-group">
+                        <label for="email">Váš e-mail / Telefón</label>
+                        <input type="text" id="email" name="kontakt" class="form-control" placeholder="meno@firma.sk" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="system">Používaný systém</label>
+                        <input type="text" id="system" name="system" class="form-control" placeholder="Napr. MRP DOS, Softip, vlastný systém..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Poznámka (voliteľné)</label>
+                        <textarea id="message" name="sprava" class="form-control" placeholder="Popíšte špecifiká vašej evidencie..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+                        Odoslať dopyt cez formulár
+                    </button>
+                </form>
+
+                <!-- VIZUÁLNY DELIČ -->
+                <div style="display: flex; align-items: center; margin: 30px 0; color: var(--text-muted); font-size: 0.85rem;">
+                    <div style="flex: 1; height: 1px; background-color: var(--border);"></div>
+                    <span style="padding: 0 16px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">alebo kontaktujte priamo</span>
+                    <div style="flex: 1; height: 1px; background-color: var(--border);"></div>
+                </div>
+
+                <!-- MOŽNOSŤ 2: Priamy e-mail / Skopírovanie adresy -->
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <a href="mailto:kontakt@krecmer.sk?subject=Dopyt%20kompatibility%20Legacy%20E-faktura&body=Dobr%C3%BD%20d%C5%88%2C%0A%0Apou%C5%BE%C3%ADvame%20syst%C3%A9m%3A%20%0A%0APozn%C3%A1mka%3A%20" class="btn btn-secondary" style="width: 100%; font-size: 0.95rem;">
+                        ✉️ Otvoriť poštový program (kontakt@krecmer.sk)
+                    </a>
+
+                    <button type="button" onclick="copyEmail()" id="copy-btn" class="btn btn-secondary" style="width: 100%; font-size: 0.95rem;">
+                        📋 Skopírovať e-mail do schránky
+                    </button>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="system">Používaný systém</label>
-                <input type="text" id="system" name="system" class="form-control" placeholder="Napr. MRP DOS, Softip, vlastný systém..." required>
-            </div>
-            <div class="form-group">
-                <label for="message">Poznámka (voliteľné)</label>
-                <textarea id="message" name="sprava" class="form-control" placeholder="Popíšte špecifiká vašej evidencie..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
-                Odoslať dopyt cez formulár
-            </button>
-        </form>
-
-        <!-- VIZUÁLNY DELIČ -->
-        <div style="display: flex; align-items: center; margin: 30px 0; color: var(--text-muted); font-size: 0.85rem;">
-            <div style="flex: 1; height: 1px; background-color: var(--border);"></div>
-            <span style="padding: 0 16px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">alebo kontaktujte priamo</span>
-            <div style="flex: 1; height: 1px; background-color: var(--border);"></div>
-        </div>
-
-        <!-- MOŽNOSŤ 2: Priamy e-mail / Skopírovanie adresy -->
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-            <a href="mailto:kontakt@krecmer.sk?subject=Dopyt%20kompatibility%20Legacy%20E-faktura&body=Dobr%C3%BD%20d%C5%88%2C%0A%0Apou%C5%BE%C3%ADvame%20syst%C3%A9m%3A%20%0A%0APozn%C3%A1mka%3A%20" class="btn btn-secondary" style="width: 100%; font-size: 0.95rem;">
-                ✉️ Otvoriť poštový program (kontakt@krecmer.sk)
-            </a>
-
-            <button type="button" onclick="copyEmail()" id="copy-btn" class="btn btn-secondary" style="width: 100%; font-size: 0.95rem;">
-                📋 Skopírovať e-mail do schránky
-            </button>
-        </div>
-    </div>
-</section>
-
-<script>
-function copyEmail() {
-    const email = 'kontakt@krecmer.sk';
-    navigator.clipboard.writeText(email).then(() => {
-        const btn = document.getElementById('copy-btn');
-        btn.innerText = '✅ Adresa skopírovaná!';
-        btn.style.borderColor = '#10B981';
-        btn.style.color = '#10B981';
-        setTimeout(() => {
-            btn.innerText = '📋 Skopírovať e-mail do schránky';
-            btn.style.borderColor = '';
-            btn.style.color = '';
-        }, 3000);
-    });
-}
-</script>
+        </section>
 
         <!-- FOOTER -->
         <footer>
@@ -597,12 +578,27 @@ function copyEmail() {
     </div>
 
     <script>
-        function switchTab(tabId) {
+        function switchTab(tabId, btnElement) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.system-panel').forEach(panel => panel.classList.remove('active'));
 
-            event.target.classList.add('active');
+            btnElement.classList.add('active');
             document.getElementById(tabId).classList.add('active');
+        }
+
+        function copyEmail() {
+            const email = 'kontakt@krecmer.sk';
+            navigator.clipboard.writeText(email).then(() => {
+                const btn = document.getElementById('copy-btn');
+                btn.innerText = '✅ Adresa skopírovaná!';
+                btn.style.borderColor = '#10B981';
+                btn.style.color = '#10B981';
+                setTimeout(() => {
+                    btn.innerText = '📋 Skopírovať e-mail do schránky';
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                }, 3000);
+            });
         }
     </script>
 </body>
