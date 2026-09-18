@@ -105,6 +105,7 @@
             text-decoration: none;
             transition: all 0.2s ease;
             cursor: pointer;
+            border: 1px solid transparent;
         }
 
         .btn-primary {
@@ -126,6 +127,7 @@
 
         .btn-secondary:hover {
             background-color: var(--bg-card-hover);
+            border-color: var(--text-muted);
         }
 
         /* SECTION COMMON */
@@ -277,7 +279,6 @@
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 24px;
-            position: relative;
         }
 
         .step-num {
@@ -299,13 +300,13 @@
             font-size: 0.9rem;
         }
 
-        /* CONTACT SECTION */
+        /* DIRECT CONTACT BOX */
         .contact-box {
             background-color: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 40px;
-            max-width: 700px;
+            padding: 48px 40px;
+            max-width: 680px;
             margin: 0 auto;
             text-align: center;
         }
@@ -320,43 +321,26 @@
             margin-bottom: 28px;
         }
 
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            text-align: left;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-group label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-title);
-        }
-
-        .form-control {
+        .email-display {
             background-color: var(--bg-main);
             border: 1px solid var(--border);
-            color: var(--text-title);
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s ease;
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #60A5FA;
+            letter-spacing: 0.03em;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .form-control:focus {
-            border-color: var(--accent);
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 100px;
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         footer {
@@ -368,7 +352,8 @@
 
         @media (max-width: 768px) {
             header { padding: 40px 0 20px; }
-            .contact-box { padding: 24px; }
+            .contact-box { padding: 32px 20px; }
+            .email-display { font-size: 1.05rem; }
         }
     </style>
 </head>
@@ -522,49 +507,22 @@
             </div>
         </section>
 
-        <!-- KONTAKTNÁ SEKCIA -->
+        <!-- KONTAKTNÁ SEKCIA (DIRECT MAILTO + COPY) -->
         <section id="kontakt">
             <div class="contact-box">
-                <h2>Preverte kompatibilitu vášho systému</h2>
+                <h2>Prevelte kompatibilitu vášho systému</h2>
                 <p>Napíšte mi, aký účtovný alebo interný systém používate. Do 24 hodín vám potvrdím možnosti prepojenia.</p>
 
-                <!-- MOŽNOSŤ 1: Zabezpečený webový formulár -->
-                <form class="contact-form" action="https://formsubmit.co/kontakt@krecmer.sk" method="POST">
-                    <input type="hidden" name="_next" value="https://krsoft-tools.github.io/legacy-systems-efaktura-bridge/index-sk.html?status=success">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_subject" value="Nová správa z webu - Legacy E-faktúra Bridge">
-
-                    <div class="form-group">
-                        <label for="email">Váš e-mail / Telefón</label>
-                        <input type="text" id="email" name="kontakt" class="form-control" placeholder="meno@firma.sk" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="system">Používaný systém</label>
-                        <input type="text" id="system" name="system" class="form-control" placeholder="Napr. MRP DOS, Softip, vlastný systém..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Poznámka (voliteľné)</label>
-                        <textarea id="message" name="sprava" class="form-control" placeholder="Popíšte špecifiká vašej evidencie..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
-                        Odoslať dopyt cez formulár
-                    </button>
-                </form>
-
-                <!-- VIZUÁLNY DELIČ -->
-                <div style="display: flex; align-items: center; margin: 30px 0; color: var(--text-muted); font-size: 0.85rem;">
-                    <div style="flex: 1; height: 1px; background-color: var(--border);"></div>
-                    <span style="padding: 0 16px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">alebo kontaktujte priamo</span>
-                    <div style="flex: 1; height: 1px; background-color: var(--border);"></div>
+                <div class="email-display">
+                    ✉️ kontakt@krecmer.sk
                 </div>
 
-                <!-- MOŽNOSŤ 2: Priamy e-mail / Skopírovanie adresy -->
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <a href="mailto:kontakt@krecmer.sk?subject=Dopyt%20kompatibility%20Legacy%20E-faktura&body=Dobr%C3%BD%20d%C5%88%2C%0A%0Apou%C5%BE%C3%ADvame%20syst%C3%A9m%3A%20%0A%0APozn%C3%A1mka%3A%20" class="btn btn-secondary" style="width: 100%; font-size: 0.95rem;">
-                        ✉️ Otvoriť poštový program (kontakt@krecmer.sk)
+                <div class="action-buttons">
+                    <a href="mailto:kontakt@krecmer.sk?subject=Dopyt%20kompatibility%20Legacy%20E-faktura&body=Dobr%C3%BD%20d%C5%88%2C%0A%0Apou%C5%BE%C3%ADvame%20syst%C3%A9m%3A%20%0A%0APozn%C3%A1mka%3A%20" class="btn btn-primary" style="font-size: 1rem;">
+                        Otvoriť e-mailový klient
                     </a>
 
-                    <button type="button" onclick="copyEmail()" id="copy-btn" class="btn btn-secondary" style="width: 100%; font-size: 0.95rem;">
+                    <button type="button" onclick="copyEmail()" id="copy-btn" class="btn btn-secondary" style="font-size: 0.95rem;">
                         📋 Skopírovať e-mail do schránky
                     </button>
                 </div>
@@ -590,7 +548,7 @@
             const email = 'kontakt@krecmer.sk';
             navigator.clipboard.writeText(email).then(() => {
                 const btn = document.getElementById('copy-btn');
-                btn.innerText = '✅ Adresa skopírovaná!';
+                btn.innerText = '✅ Adresa bola skopírovaná!';
                 btn.style.borderColor = '#10B981';
                 btn.style.color = '#10B981';
                 setTimeout(() => {
