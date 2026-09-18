@@ -3,215 +3,563 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-fakturácia pre legacy systémy | MRP, Softip, DBF konektor</title>
+    <title>E-fakturácia a XML Bridge pre Legacy ERP | MRP, Softip, VEMA, DBF</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent: #2563eb;
-            --accent-hover: #1d4ed8;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
-            --tag-bg: #334155;
+            --bg-main: #0B0F17;
+            --bg-card: #151C28;
+            --bg-card-hover: #1C2637;
+            --border: #232D3F;
+            --accent: #2563EB;
+            --accent-hover: #1D4ED8;
+            --accent-glow: rgba(37, 99, 235, 0.25);
+            --text-title: #F8FAFC;
+            --text-body: #94A3B8;
+            --text-muted: #64748B;
+            --success: #10B981;
+            --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--font);
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg-main);
+            color: var(--text-title);
             line-height: 1.6;
-            padding: 20px;
+            padding: 0;
+            margin: 0;
         }
 
         .container {
-            max-width: 900px;
-            margin: 40px auto;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
+        /* HEADER & HERO */
         header {
+            padding: 60px 0 40px;
             text-align: center;
-            margin-bottom: 50px;
         }
 
         .badge {
-            background-color: rgba(37, 99, 235, 0.2);
-            color: #60a5fa;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid var(--border);
+            color: #60A5FA;
             padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.875rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
             font-weight: 600;
-            display: inline-block;
-            margin-bottom: 16px;
-            border: 1px solid rgba(96, 165, 250, 0.3);
-        }
-
-        h1 {
-            font-size: 2.3rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 16px;
-        }
-
-        p.hero-subtitle {
-            font-size: 1.125rem;
-            color: var(--text-muted);
-            max-width: 750px;
-            margin: 0 auto;
-        }
-
-        .systems-section {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px;
-            margin-bottom: 40px;
-        }
-
-        .systems-section h2 {
-            font-size: 1.4rem;
-            margin-bottom: 16px;
-            color: #38bdf8;
-            text-align: center;
-        }
-
-        .systems-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .system-tag {
-            background-color: var(--tag-bg);
-            color: #f1f5f9;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 24px;
-        }
-
-        .card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 12px;
-            color: #38bdf8;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .cta-box {
-            background-color: var(--card-bg);
-            border: 1px solid var(--accent);
-            border-radius: 12px;
-            padding: 32px;
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .cta-box h2 {
-            margin-bottom: 12px;
-        }
-
-        .cta-box p {
-            color: var(--text-muted);
             margin-bottom: 24px;
         }
 
-        .btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: #ffffff;
-            font-weight: 600;
-            padding: 12px 28px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.2s ease;
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
         }
 
-        .btn:hover {
+        h1 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #CBD5E1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-body);
+            max-width: 760px;
+            margin: 0 auto 36px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #FFFFFF;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
             background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-card);
+            color: var(--text-title);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-card-hover);
+        }
+
+        /* SECTION COMMON */
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: var(--text-body);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* CORE PILIARS / FEATURES */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #60A5FA;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--text-body);
+            font-size: 0.95rem;
+        }
+
+        /* SYSTEM TABS & COMPATIBILITY */
+        .system-tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-body);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: var(--accent);
+            color: #FFFFFF;
+            border-color: var(--accent);
+        }
+
+        .system-content {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .system-panel {
+            display: none;
+        }
+
+        .system-panel.active {
+            display: block;
+        }
+
+        .system-panel h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #60A5FA;
+        }
+
+        .system-panel p {
+            color: var(--text-body);
+            margin-bottom: 20px;
+        }
+
+        .system-specs {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .system-specs li {
+            background-color: var(--bg-main);
+            padding: 12px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-title);
+        }
+
+        /* WORKFLOW / PROCESS */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .step-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .step-num {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #60A5FA;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .step-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .step-card p {
+            color: var(--text-body);
+            font-size: 0.9rem;
+        }
+
+        /* CONTACT SECTION */
+        .contact-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-box h2 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .contact-box p {
+            color: var(--text-body);
+            margin-bottom: 28px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: left;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-title);
+        }
+
+        .form-control {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border);
+            color: var(--text-title);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
         }
 
         footer {
+            padding: 40px 0;
             text-align: center;
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border);
             color: var(--text-muted);
             font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 40px 0 20px; }
+            .contact-box { padding: 24px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- HERO -->
         <header>
-            <span class="badge">B2B Integration & Legacy Systems Specialist</span>
-            <h1>E-fakturácia a XML konektory pre staršie a interné systémy</h1>
-            <p class="hero-subtitle">Generujte automaticky validné XML doklady (ePostak / ISDOC) priamo z uzavretých databáz bez výmeny softvéru a bez investícií do nového ERP.</p>
+            <div class="badge">
+                <span class="badge-dot"></span>
+                Garantované nasadenie do 10 pracovných dní
+            </div>
+            <h1>E-fakturácia pre MRP a staršie účtovné systémy</h1>
+            <p class="hero-subtitle">
+                Spĺňajte zákonné požiadavky na e-faktúru (ePostak / ISDOC) bez nutnosti menit zabehnutý softvér, prerušovať prevádzku alebo preškoľovať ekonomický tím.
+            </p>
+            <div class="hero-cta">
+                <a href="#kontakt" class="btn btn-primary">Konzultovať kompatibilitu</a>
+                <a href="#systemy" class="btn btn-secondary">Podporované systémy</a>
+            </div>
         </header>
 
-        <section class="systems-section">
-            <h2>Podporované systémy a databázové štruktúry</h2>
-            <div class="systems-grid">
-                <span class="system-tag">MRP (DOS)</span>
-                <span class="system-tag">MRP Vizuálny systém</span>
-                <span class="system-tag">Softip (staršie verzie)</span>
-                <span class="system-tag">VEMA / KROS VEMA</span>
-                <span class="system-tag">Vlastný vyvinutý / Interný softvér</span>
-                <span class="system-tag">dBase / FoxPro (.dbf)</span>
+        <!-- HLAVNÉ PILIERE -->
+        <section>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">§</div>
+                    <h3>Zákonná zhoda (ePostak / ISDOC)</h3>
+                    <p>Skript automaticky generuje 100% validné XML štruktúry pripravené pre štátnu e-fakturáciu a medzifiremnú výmenu dokladov.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Bez zásahu do prevádzky</h3>
+                    <p>Účtovníčky a ekonomické oddelenie pracujú naďalej v prostredí, ktoré dokonale poznajú. Žiadne zmeny pracovných postupov.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Plná automatizácia na pozadí</h3>
+                    <p>Sledovanie nových faktúr a generovanie XML prebieha automaticky bez toho, aby musel zamestnanec čokoľvek ručne exportovať či prepisovať.</p>
+                </div>
             </div>
         </section>
 
-        <div class="grid">
-            <div class="card">
-                <h3>Extrakcia z DBF a lokálnych DB</h3>
-                <p>Priame bezpečné čítanie dát bez rizika poškodenia existujúcej databázy. Nepotrebujete oficiálne API od dodávateľa.</p>
+        <!-- PODPOROVANÉ SYSTÉMY -->
+        <section id="systemy">
+            <div class="section-title">
+                <h2>Podporované databázy a systémy</h2>
+                <p>Bezpečné čítanie dát priamo z lokálnych databáz bez rizika poškodenia existujúcej evidencie.</p>
             </div>
-            <div class="card">
-                <h3>Zachovanie pracovných postupov</h3>
-                <p>Žiadne preškoľovanie tímu ani výmena ERP za desiatky tisíc eur. Zápis a evidencia faktúr zostáva v pôvodnom systéme.</p>
-            </div>
-            <div class="card">
-                <h3>Validné XML štruktúry</h3>
-                <p>Automatické generovanie schválených formátov pre e-fakturáciu (ePostak / ISDOC) pripravených na odoslanie.</p>
-            </div>
-        </div>
 
-        <div class="cta-box">
-            <h2>Používate interný alebo legacy systém?</h2>
-            <p>Navrhnem a nasadím bezpečný skript na mieru pre vašu databázu do 10 pracovných dní.</p>
-            <a href="mailto:krsoft.tools@gmail.com" class="btn">Konzultovať kompatibilitu</a>
-        </div>
+            <div class="system-tabs">
+                <button class="tab-btn active" onclick="switchTab('mrp-dos')">MRP (DOS)</button>
+                <button class="tab-btn" onclick="switchTab('mrp-vizual')">MRP Vizuálny</button>
+                <button class="tab-btn" onclick="switchTab('softip')">Softip</button>
+                <button class="tab-btn" onclick="switchTab('vema')">VEMA</button>
+                <button class="tab-btn" onclick="switchTab('dbf')">dBase / FoxPro</button>
+                <button class="tab-btn" onclick="switchTab('custom')">Vlastný softvér</button>
+            </div>
 
+            <div class="system-content">
+                <div id="mrp-dos" class="system-panel active">
+                    <h3>MRP DOS / Staršie verzie</h3>
+                    <p>Priama extrakcia hlavičiek a položiek faktúr z lokálnych `.dbf` tabuliek. Nevyžaduje žiadne úpravy pôvodného softvéru.</p>
+                    <ul class="system-specs">
+                        <li><strong>Metóda:</strong> Read-only DBF parser</li>
+                        <li><strong>Výstup:</strong> ISDOC / ePostak XML</li>
+                        <li><strong>Režim:</strong> Automatický daemon / plánovač</li>
+                    </ul>
+                </div>
+
+                <div id="mrp-vizual" class="system-panel">
+                    <h3>MRP Vizuálny systém</h3>
+                    <p>Konektor pre vizuálne verzie MRP. Extrahujeme vystavené faktúry v reálnom čase priamo zo štruktúry databázy.</p>
+                    <ul class="system-specs">
+                        <li><strong>Metóda:</strong> Databázový konektor / DBF</li>
+                        <li><strong>Výstup:</strong> ISDOC / ePostak XML</li>
+                        <li><strong>Režim:</strong> Automatické spracovanie</li>
+                    </ul>
+                </div>
+
+                <div id="softip" class="system-panel">
+                    <h3>Softip (Legacy verzie)</h3>
+                    <p>Riešenie pre staršie generácie systému Softip. Zabezpečuje bezpečný odchyt fakturačných dát bez nutnosti upgrade-u modulu.</p>
+                    <ul class="system-specs">
+                        <li><strong>Metóda:</strong> Dátový bridge</li>
+                        <li><strong>Výstup:</strong> Štruktúrované XML</li>
+                        <li><strong>Režim:</strong> Beží na pozadí Windows/Linux</li>
+                    </ul>
+                </div>
+
+                <div id="vema" class="system-panel">
+                    <h3>KROS VEMA</h3>
+                    <p>Extrakcia fakturačných a účtovných podkladov pre firmy využívajúce systémy VEMA bez podpory moderného API konektora.</p>
+                    <ul class="system-specs">
+                        <li><strong>Metóda:</strong> Priame čítanie dátových súborov</li>
+                        <li><strong>Výstup:</strong> ISDOC XML</li>
+                        <li><strong>Režim:</strong> Dávkové / okamžité generovanie</li>
+                    </ul>
+                </div>
+
+                <div id="dbf" class="system-panel">
+                    <h3>Vyvíjané dBase / Visual FoxPro (.dbf)</h3>
+                    <p>Univerzálny konektor pre akékoľvek interné aplikácie postavené na databázových súboroch DBF.</p>
+                    <ul class="system-specs">
+                        <li><strong>Metóda:</strong> Custom DBF schéma mapping</li>
+                        <li><strong>Výstup:</strong> ePostak / Custom XML</li>
+                        <li><strong>Režim:</strong> Plne prispôsobené na mieru</li>
+                    </ul>
+                </div>
+
+                <div id="custom" class="system-panel">
+                    <h3>Špeciálny interný / Vlastný softvér</h3>
+                    <p>Ak máte vnútrofiremný systém vyvinutý na mieru bez dokumentácie, mapujeme databázové tabuľky a napojíme export priamo.</p>
+                    <ul class="system-specs">
+                        <li><strong>Metóda:</strong> Reverzná analýza schéma DB</li>
+                        <li><strong>Výstup:</strong> Validné XML</li>
+                        <li><strong>Režim:</strong> Zákazkový vývoj konektora</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROCES NASADENIA -->
+        <section>
+            <div class="section-title">
+                <h2>Ako prebieha nasadenie</h2>
+                <p>Od prvej analýzy po plne funkčné automatické generovanie XML do 10 dní.</p>
+            </div>
+
+            <div class="process-steps">
+                <div class="step-card">
+                    <div class="step-num">Krok 01</div>
+                    <h4>Analýza databázy</h4>
+                    <p>Preveríme štruktúru vašej databázy (DBF/SQL) a overíme prítomnosť všetkých povinných polí pre e-faktúru.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">Krok 02</div>
+                    <h4>Vývoj konektora</h4>
+                    <p>Pripravíme skript namapovaný presne na vaše fakturačné polia a nastavíme validáciu XML štruktúry.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">Krok 03</div>
+                    <h4>Testovacia prevádzka</h4>
+                    <p>Nasadíme skript do testovacieho režimu a overíme správnosť vygenerovaných XML dokumentov.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">Krok 04</div>
+                    <h4>Ostré spustenie</h4>
+                    <p>Aktivujeme automatické generovanie na pozadí. Váš systém posiela e-faktúry bez akéhokoľvek manuálneho zásahu.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- KONTAKTNÝ FORMULÁR -->
+        <section id="kontakt">
+            <div class="contact-box">
+                <h2>Preverte kompatibilitu vášho systému</h2>
+                <p>Napíšte mi, aký účtovný alebo interný systém používate. Do 24 hodín vám potvrdím možnosti prepojenia.</p>
+
+                <form class="contact-form" action="mailto:kontakt@krecmer.sk" method="post" enctype="text/plain">
+                    <div class="form-group">
+                        <label for="email">Váš e-mail / Telefón</label>
+                        <input type="text" id="email" name="kontakt" class="form-control" placeholder="meno@firma.sk" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="system">Používaný systém</label>
+                        <input type="text" id="system" name="system" class="form-control" placeholder="Napr. MRP DOS, Softip, vlastný systém..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Poznámka (voliteľné)</label>
+                        <textarea id="message" name="sprava" class="form-control" placeholder="Popíšte špecifiká vašej evidencie..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Odoslať nezáväzný dopyt</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
         <footer>
-            <p>&copy; 2026 Róbert Krečmer – Freelance Backend Developer. Špecializácia na legacy data parsing a B2B integrácie.</p>
+            <p>&copy; 2026 Róbert Krečmer – Freelance Software Engineer. B2B dátová automatizácia a vývoj konektorov pre legacy systémy.</p>
         </footer>
     </div>
 
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.system-panel').forEach(panel => panel.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
 </body>
 </html>
