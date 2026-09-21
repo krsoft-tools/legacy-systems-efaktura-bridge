@@ -83,11 +83,11 @@
             font-weight: 800;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
         }
 
         .brand-accent {
-            color: #60A5FA; /* -Tools v modrom akcente */
+            color: #60A5FA; /* -Tools v modrom akcente bez medzery */
         }
 
         .brand-separator {
@@ -127,7 +127,7 @@
             background-color: var(--bg-card);
         }
 
-        /* Neviditeľný mostík pre zachovanie hover stavu */
+        /* Neviditeľný mostík pre plynulý hover */
         .dropdown::after {
             content: "";
             position: absolute;
@@ -142,7 +142,7 @@
             display: none;
             position: absolute;
             top: calc(100% + 4px);
-            right: 0; /* Zarovnané doprava, keďže nav je vpravo */
+            right: 0;
             min-width: 210px;
             background-color: var(--bg-card);
             border: 1px solid var(--border);
@@ -482,6 +482,7 @@
             margin-bottom: 28px;
         }
 
+        /* Opravená modrá farba e-mailu */
         .email-display {
             background-color: var(--bg-main);
             border: 1px solid var(--border);
@@ -511,21 +512,6 @@
             font-size: 0.875rem;
         }
 
-        /* FOOTER & FEEDBACK */
-        .feedback-box {
-            margin: 50px auto 30px auto;
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #1f2937;
-        }
-
-        footer {
-            text-align: center;
-            font-size: 13px;
-            color: #60A5FA;
-            margin-top: 40px;
-        }
-        
         @media (max-width: 768px) {
             nav {
                 flex-direction: column;
@@ -547,7 +533,7 @@
     <div class="container">
         <!-- NAVIGÁCIA -->
         <nav>
-            <!-- Branding vľavo -->
+            <!-- Branding vľavo bez medzery -->
             <div class="brand-container">
                 <span class="brand-name">⚡ KRSoft<span class="brand-accent">-Tools</span></span>
                 <span class="brand-separator">:</span>
@@ -561,9 +547,9 @@
                         Ďalšie nástroje ▾
                     </button>
                     <div class="dropdown-menu">
-                        <a href="https://krsoft-tools.github.io/ai-invoice-extractor/" class="dropdown-item" target="_blank" rel="noopener">AI Extrahovač faktúr</a>
+                        <a href="https://krsoft-tools.github.io/ai-invoice-extractor/" class="dropdown-item" target="_blank" rel="noopener">AI Invoice Extractor</a>
                         <a href="https://krsoft-tools.github.io/excelaudit/index.html" class="dropdown-item" target="_blank" rel="noopener">Excel Audit</a>
-                        <a href="https://krsoft-tools.github.io/excel-compare-tool/" class="dropdown-item" target="_blank" rel="noopener">Excel porovnávací nástroj</a>
+                        <a href="https://krsoft-tools.github.io/excel-compare-tool/" class="dropdown-item" target="_blank" rel="noopener">Excel Compare Tool</a>
                     </div>
                 </div>
 
@@ -721,7 +707,7 @@
             </div>
         </section>
 
-        <!-- KONTAKTNÝ BOX -->
+        <!-- KONTAKTNÝ BOX (Vložený do samostatnej sekcie medzi čiary) -->
         <section id="contact-sec">
             <div class="contact-box">
                 <h2>Overte kompatibilitu vášho systému</h2>
@@ -743,21 +729,6 @@
             </div>
         </section>
 
-        <!-- CONTACT & FEEDBACK -->
-        <div class="feedback-box">
-          <p style="font-size:18px; font-weight:600; color:#ffffff; margin-bottom:10px;">
-            Vyskúšali ste softvér?
-          </p>
-          <p style="font-size:15px; color:#9ca3af; margin-bottom:15px;">
-            Ak ste použili demo verziu alebo máte iný problém, ktorý by podľa Vás vyriešil jednoduchý lokálny nástroj, napíšte nám priamo:
-          </p>
-          <p style="font-size:17px; font-weight:bold; margin:0;">
-            <a href="mailto:krsoft.tools@gmail.com" style="color:#10b981; text-decoration:none;">
-              krsoft.tools@gmail.com
-            </a>
-          </p>
-        </div>
-        
         <!-- FOOTER -->
         <footer>
             <p>&copy; 2026 Róbert Krečmer – Freelance Software Engineer. Automatizácia B2B dát & Integrácie starších ERP.</p>
