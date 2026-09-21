@@ -79,7 +79,7 @@
         }
 
         .brand-name {
-            color: #FFFFFF; /* KRSoft je biely */
+            color: #FFFFFF;
             font-weight: 800;
             display: inline-flex;
             align-items: center;
@@ -87,7 +87,7 @@
         }
 
         .brand-accent {
-            color: #60A5FA; /* -Tools v modrom akcente bez medzery */
+            color: #60A5FA;
         }
 
         .brand-separator {
@@ -127,7 +127,6 @@
             background-color: var(--bg-card);
         }
 
-        /* Neviditeľný mostík pre plynulý hover */
         .dropdown::after {
             content: "";
             position: absolute;
@@ -461,48 +460,56 @@
             font-size: 0.9rem;
         }
 
-        /* DIRECT CONTACT BOX */
+        /* CONTACT BOX */
         .contact-box {
             background-color: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 48px 40px;
-            max-width: 680px;
-            margin: 0 auto;
+            border-radius: 12px;
+            padding: 40px;
             text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .contact-box h2 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 12px;
         }
 
         .contact-box p {
             color: var(--text-body);
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
-        /* Opravená modrá farba e-mailu */
         .email-display {
             background-color: var(--bg-main);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 16px;
-            font-size: 1.25rem;
-            font-weight: 700;
+            border: 1px dashed var(--border);
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.2rem;
             color: #60A5FA;
-            letter-spacing: 0.03em;
+            display: inline-block;
             margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            letter-spacing: 0.5px;
         }
 
         .action-buttons {
             display: flex;
-            flex-direction: column;
             gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* FEEDBACK BOX */
+        .feedback-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         footer {
@@ -523,8 +530,9 @@
                 justify-content: space-between;
             }
             header { padding: 30px 0 20px; }
-            .contact-box { padding: 32px 20px; }
-            .email-display { font-size: 1.05rem; }
+            .contact-box, .feedback-box { padding: 24px 16px; }
+            .action-buttons { flex-direction: column; }
+            .action-buttons .btn { width: 100%; }
         }
     </style>
 </head>
@@ -533,14 +541,12 @@
     <div class="container">
         <!-- NAVIGÁCIA -->
         <nav>
-            <!-- Branding vľavo bez medzery -->
             <div class="brand-container">
                 <span class="brand-name">⚡ KRSoft<span class="brand-accent">-Tools</span></span>
                 <span class="brand-separator">:</span>
                 <span class="brand-tool">eInvoice Bridge</span>
             </div>
 
-            <!-- Pravá časť menu: Dropdown + Jazykový prepínač -->
             <div class="nav-right">
                 <div class="dropdown">
                     <button type="button" class="dropdown-btn">
@@ -707,7 +713,7 @@
             </div>
         </section>
 
-        <!-- KONTAKTNÝ BOX (Vložený do samostatnej sekcie medzi čiary) -->
+        <!-- KONTAKTNÝ BOX -->
         <section id="contact-sec">
             <div class="contact-box">
                 <h2>Overte kompatibilitu vášho systému</h2>
@@ -726,6 +732,23 @@
                         📋 Skopírovať e-mail do schránky
                     </button>
                 </div>
+            </div>
+        </section>
+
+        <!-- FEEDBACK BOX -->
+        <section>
+            <div class="feedback-box">
+                <p style="font-size:18px; font-weight:600; color:#ffffff; margin-bottom:10px;">
+                    Vyskúšali ste náš softvér?
+                </p>
+                <p style="font-size:15px; color:#9ca3af; margin-bottom:15px;">
+                    Ak ste použili demo verziu alebo máte iný problém, ktorý by mohol vyriešiť jednoduchý lokálny nástroj, kontaktujte ma priamo:
+                </p>
+                <p style="font-size:17px; font-weight:bold; margin:0;">
+                    <a href="mailto:krsoft.tools@gmail.com" style="color:#60A5FA; text-decoration:none;">
+                        krsoft.tools@gmail.com
+                    </a>
+                </p>
             </div>
         </section>
 
@@ -752,23 +775,22 @@
         }
 
         function openEmail() {
-            window.location.href = 'mailto:krsoft.tools@gmail.com';
+            window.location.href = "mailto:krsoft.tools@gmail.com?subject=Dopyt%20na%20integr%C3%A1ciu%20e-fakt%C3%BAr";
         }
 
         function copyEmail() {
-            const email = 'krsoft.tools@gmail.com';
+            const email = "krsoft.tools@gmail.com";
             navigator.clipboard.writeText(email).then(() => {
                 const btn = document.getElementById('copy-btn');
-                btn.innerText = '✅ Adresa skopírovaná!';
-                btn.style.borderColor = '#10B981';
-                btn.style.color = '#10B981';
+                const originalText = btn.innerText;
+                btn.innerText = "✓ Skopírované!";
+                btn.style.borderColor = "#10B981";
+                btn.style.color = "#10B981";
                 setTimeout(() => {
-                    btn.innerText = '📋 Skopírovať e-mail do schránky';
-                    btn.style.borderColor = '';
-                    btn.style.color = '';
-                }, 3000);
-            }).catch(err => {
-                alert('E-mailová adresa: krsoft.tools@gmail.com');
+                    btn.innerText = originalText;
+                    btn.style.borderColor = "";
+                    btn.style.color = "";
+                }, 2000);
             });
         }
     </script>
