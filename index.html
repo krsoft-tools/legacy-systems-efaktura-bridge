@@ -6,10 +6,10 @@
     <title>E-Invoicing & XML Integration for Legacy ERPs | MRP, Softip, VEMA, DBF</title>
     <meta name="google-site-verification" content="THd7CKJN41-0BzUO27F0JruAsAr9kz_NFUM2DfUbMr0" />
     
-    <!-- Canonical smeruje na hlavnú EN verziu -->
-    <link rel="canonical" href="https://tvoja-domena.sk/" />
+    <!-- Canonical -->
+    <link rel="canonical" href="https://tvoja-domena.sk/index.html" />
 
-    <!-- Jazykové mutácie -->
+    <!-- Language alternatives -->
     <link rel="alternate" hreflang="en" href="https://tvoja-domena.sk/" />
     <link rel="alternate" hreflang="sk" href="https://tvoja-domena.sk/index-sk.html" />
     <link rel="alternate" hreflang="x-default" href="https://tvoja-domena.sk/" />
@@ -20,9 +20,9 @@
             --bg-card: #151C28;
             --bg-card-hover: #1C2637;
             --border: #232D3F;
-            --accent: #2563EB;
-            --accent-hover: #1D4ED8;
-            --accent-glow: rgba(37, 99, 235, 0.25);
+            --accent-blue: #2563EB;
+            --accent-blue-hover: #1D4ED8;
+            --accent-blue-glow: rgba(37, 99, 235, 0.25);
             --text-title: #F8FAFC;
             --text-body: #94A3B8;
             --text-muted: #64748B;
@@ -52,13 +52,126 @@
             padding: 0 24px;
         }
 
-        /* NAVBAR / LANG SWITCHER */
+        /* NAVIGATION BAR */
         nav {
             display: flex;
-            justify-content: flex-end;
-            padding: 20px 0 0;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0 12px;
+            gap: 16px;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: nowrap;
+        }
+
+        /* BRANDING */
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.05rem;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .brand-name {
+            color: #FFFFFF;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .brand-accent {
+            color: #60A5FA;
+        }
+
+        .brand-separator {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .brand-tool {
+            color: var(--text-title);
+            font-weight: 600;
+        }
+
+        /* DROPDOWN NAVIGATION */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            color: var(--text-body);
+            background: transparent;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .dropdown-btn:hover {
+            color: var(--text-title);
+            background-color: var(--bg-card);
+        }
+
+        .dropdown::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            display: block;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            right: 0;
+            min-width: 210px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 6px 0;
+            z-index: 1000;
+        }
+
+        .dropdown:hover .dropdown-menu,
+        .dropdown-menu:hover {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 16px;
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--bg-card-hover);
+            color: var(--text-title);
+        }
+
+        /* LANG SWITCHER */
         .lang-switcher {
             display: inline-flex;
             background-color: var(--bg-card);
@@ -66,6 +179,7 @@
             border-radius: 8px;
             padding: 4px;
             gap: 4px;
+            white-space: nowrap;
         }
 
         .lang-btn {
@@ -79,7 +193,7 @@
         }
 
         .lang-btn.active {
-            background-color: var(--accent);
+            background-color: var(--accent-blue);
             color: #FFFFFF;
         }
 
@@ -90,7 +204,7 @@
 
         /* HEADER & HERO */
         header {
-            padding: 40px 0 40px;
+            padding: 48px 0 40px;
             text-align: center;
         }
 
@@ -155,13 +269,13 @@
         }
 
         .btn-primary {
-            background-color: var(--accent);
+            background-color: var(--accent-blue);
             color: #FFFFFF;
-            box-shadow: 0 4px 20px var(--accent-glow);
+            box-shadow: 0 4px 20px var(--accent-blue-glow);
         }
 
         .btn-primary:hover {
-            background-color: var(--accent-hover);
+            background-color: var(--accent-blue-hover);
             transform: translateY(-1px);
         }
 
@@ -216,7 +330,7 @@
 
         .feature-card:hover {
             transform: translateY(-3px);
-            border-color: var(--accent);
+            border-color: var(--accent-blue);
         }
 
         .feature-icon {
@@ -264,9 +378,9 @@
         }
 
         .tab-btn:hover, .tab-btn.active {
-            background-color: var(--accent);
+            background-color: var(--accent-blue);
             color: #FFFFFF;
-            border-color: var(--accent);
+            border-color: var(--accent-blue);
         }
 
         .system-content {
@@ -346,47 +460,56 @@
             font-size: 0.9rem;
         }
 
-        /* DIRECT CONTACT BOX */
+        /* CONTACT BOX */
         .contact-box {
             background-color: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 48px 40px;
-            max-width: 680px;
-            margin: 0 auto;
+            border-radius: 12px;
+            padding: 40px;
             text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .contact-box h2 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 12px;
         }
 
         .contact-box p {
             color: var(--text-body);
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .email-display {
             background-color: var(--bg-main);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 16px;
-            font-size: 1.25rem;
-            font-weight: 700;
+            border: 1px dashed var(--border);
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.2rem;
             color: #60A5FA;
-            letter-spacing: 0.03em;
+            display: inline-block;
             margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            letter-spacing: 0.5px;
         }
 
         .action-buttons {
             display: flex;
-            flex-direction: column;
             gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* FEEDBACK BOX */
+        .feedback-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         footer {
@@ -397,25 +520,49 @@
         }
 
         @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            .nav-right {
+                width: 100%;
+                justify-content: space-between;
+            }
             header { padding: 30px 0 20px; }
-            .contact-box { padding: 32px 20px; }
-            .email-display { font-size: 1.05rem; }
+            .contact-box, .feedback-box { padding: 24px 16px; }
+            .action-buttons { flex-direction: column; }
+            .action-buttons .btn { width: 100%; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- LANG SWITCHER -->
-        <!-- NAVBAR -->
-        <nav style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0 0;">
-            <a href="https://krsoft-tools.github.io/excelaudit/index.html" target="_blank" rel="noopener" style="color: #94A3B8; text-decoration: none; font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
-                📊 ExcelAudit Tool ↗
-            </a>
+        <!-- NAVIGATION -->
+        <nav>
+            <div class="brand-container">
+                <span class="brand-name">⚡ KRSoft<span class="brand-accent">-Tools</span></span>
+                <span class="brand-separator">:</span>
+                <span class="brand-tool">eInvoice Bridge</span>
+            </div>
 
-            <div class="lang-switcher">
-                <a href="index-sk.html" class="lang-btn">SK</a>
-                <a href="index.html" class="lang-btn active">EN</a>
+            <div class="nav-right">
+                <div class="dropdown">
+                    <button type="button" class="dropdown-btn">
+                        More Tools ▾
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="https://krsoft-tools.github.io/ai-invoice-extractor/" class="dropdown-item" target="_blank" rel="noopener">AI Invoice Extractor</a>
+                        <a href="https://krsoft-tools.github.io/excelaudit/index.html" class="dropdown-item" target="_blank" rel="noopener">Excel Audit</a>
+                        <a href="https://krsoft-tools.github.io/excel-compare-tool/" class="dropdown-item" target="_blank" rel="noopener">Excel Compare Tool</a>
+                    </div>
+                </div>
+
+                <div class="lang-switcher">
+                    <a href="index-sk.html" class="lang-btn">SK</a>
+                    <a href="index.html" class="lang-btn active">EN</a>
+                </div>
             </div>
         </nav>
 
@@ -423,11 +570,11 @@
         <header>
             <div class="badge">
                 <span class="badge-dot"></span>
-                Guaranteed Deployment Within 10 Business Days
+                Guaranteed deployment within 10 business days
             </div>
             <h1>E-Invoicing & XML Integration for Legacy ERP Systems</h1>
             <p class="hero-subtitle">
-                Meet statutory e-invoicing compliance (ePostak / ISDOC / UBL) without replacing your existing software, disrupting operations, or retraining staff.
+                Meet legal e-invoicing requirements (ePostak / ISDOC / UBL) without replacing your accounting software, interrupting operations, or retraining staff.
             </p>
             <div class="hero-cta">
                 <button type="button" onclick="scrollToElement('contact-sec')" class="btn btn-primary">Check Compatibility</button>
@@ -441,17 +588,17 @@
                 <div class="feature-card">
                     <div class="feature-icon">§</div>
                     <h3>Legal Compliance (ISDOC / UBL)</h3>
-                    <p>Automated generation of 100% valid XML schemas ready for national e-invoicing systems and B2B exchange.</p>
+                    <p>Automatic generation of 100% compliant XML schemas ready for national e-invoicing portals and B2B exchanges.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">⚡</div>
                     <h3>Zero Operational Impact</h3>
-                    <p>Your accounting team continues using their familiar legacy interfaces. No workflow adjustments required.</p>
+                    <p>Your accounting team continues working in their familiar software environment. No workflow adjustments required.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">⚙️</div>
                     <h3>Background Automation</h3>
-                    <p>Real-time monitoring and XML conversion run automatically without requiring manual exports or data re-entry.</p>
+                    <p>Real-time change tracking and XML conversion run automatically without manual exports or data re-entry.</p>
                 </div>
             </div>
         </section>
@@ -460,7 +607,7 @@
         <section id="systems-sec">
             <div class="section-title">
                 <h2>Supported Databases & Systems</h2>
-                <p>Safe, read-only extraction directly from local databases with zero risk of data corruption.</p>
+                <p>Safe, read-only direct extraction from local databases without any risk of data corruption.</p>
             </div>
 
             <div class="system-tabs">
@@ -469,67 +616,67 @@
                 <button type="button" class="tab-btn" onclick="switchTab('softip', this)">Softip</button>
                 <button type="button" class="tab-btn" onclick="switchTab('vema', this)">VEMA</button>
                 <button type="button" class="tab-btn" onclick="switchTab('dbf', this)">dBase / FoxPro</button>
-                <button type="button" class="tab-btn" onclick="switchTab('custom', this)">Custom Software</button>
+                <button type="button" class="tab-btn" onclick="switchTab('custom', this)">Custom ERP</button>
             </div>
 
             <div class="system-content">
                 <div id="mrp-dos" class="system-panel active">
                     <h3>MRP DOS / Legacy Versions</h3>
-                    <p>Direct extraction of invoice headers and line items from local `.dbf` files without modifying original legacy software.</p>
+                    <p>Direct extraction of invoice headers and line items from local `.dbf` files without modifying the original software.</p>
                     <ul class="system-specs">
                         <li><strong>Method:</strong> Read-only DBF parser</li>
                         <li><strong>Output:</strong> ISDOC / UBL / Custom XML</li>
-                        <li><strong>Execution:</strong> Background daemon / scheduler</li>
+                        <li><strong>Execution:</strong> Background service / Scheduler</li>
                     </ul>
                 </div>
 
                 <div id="mrp-vizual" class="system-panel">
                     <h3>MRP Visual System</h3>
-                    <p>Connector designed for visual MRP builds. Real-time extraction of issued invoices directly from database storage.</p>
+                    <p>Connector designed for visual versions of MRP. Real-time extraction of issued invoices directly from the database store.</p>
                     <ul class="system-specs">
-                        <li><strong>Method:</strong> Database Connector / DBF</li>
+                        <li><strong>Method:</strong> Database connector / DBF</li>
                         <li><strong>Output:</strong> Validated XML</li>
-                        <li><strong>Execution:</strong> Automatic event-driven process</li>
+                        <li><strong>Execution:</strong> Event-driven automatic process</li>
                     </ul>
                 </div>
 
                 <div id="softip" class="system-panel">
                     <h3>Softip (Legacy Systems)</h3>
-                    <p>Tailored solution for older Softip releases. Intercepts billing data safely without requiring expensive module upgrades.</p>
+                    <p>Tailored solution for legacy Softip setups. Safely captures billing data without requiring costly module upgrades.</p>
                     <ul class="system-specs">
-                        <li><strong>Method:</strong> Data Bridge Service</li>
+                        <li><strong>Method:</strong> Data Bridge</li>
                         <li><strong>Output:</strong> Structured XML</li>
-                        <li><strong>Execution:</strong> Windows / Linux background service</li>
+                        <li><strong>Execution:</strong> Background service for Windows / Linux</li>
                     </ul>
                 </div>
 
                 <div id="vema" class="system-panel">
-                    <h3>VEMA ERP</h3>
-                    <p>Data extraction for companies relying on VEMA software lacking native REST API or modern XML export features.</p>
+                    <h3>ERP VEMA</h3>
+                    <p>Data extraction for companies using VEMA without native REST API or modern XML export options.</p>
                     <ul class="system-specs">
-                        <li><strong>Method:</strong> Direct file reader</li>
+                        <li><strong>Method:</strong> Direct file reading</li>
                         <li><strong>Output:</strong> ISDOC XML</li>
-                        <li><strong>Execution:</strong> Batch or instant execution</li>
+                        <li><strong>Execution:</strong> Batch or instant processing</li>
                     </ul>
                 </div>
 
                 <div id="dbf" class="system-panel">
                     <h3>dBase / Visual FoxPro (.dbf)</h3>
-                    <p>Universal connector for in-house desktop applications built on custom DBF file structures.</p>
+                    <p>Universal connector for custom desktop applications built on DBF file structures.</p>
                     <ul class="system-specs">
                         <li><strong>Method:</strong> Custom DBF schema mapping</li>
                         <li><strong>Output:</strong> e-Invoice / Custom XML</li>
-                        <li><strong>Execution:</strong> Fully customized bridge</li>
+                        <li><strong>Execution:</strong> Fully customized data bridge</li>
                     </ul>
                 </div>
 
                 <div id="custom" class="system-panel">
-                    <h3>In-House / Proprietary ERP</h3>
-                    <p>For custom legacy enterprise systems without documentation. We reverse-engineer database schemas to build reliable exporters.</p>
+                    <h3>In-House / Custom ERP</h3>
+                    <p>For custom information systems lacking documentation. We reverse-engineer database schemas to build reliable exporters.</p>
                     <ul class="system-specs">
-                        <li><strong>Method:</strong> Database schema reverse-engineering</li>
+                        <li><strong>Method:</strong> Database reverse-engineering</li>
                         <li><strong>Output:</strong> Fully compliant XML</li>
-                        <li><strong>Execution:</strong> Custom connector development</li>
+                        <li><strong>Execution:</strong> Turnkey connector development</li>
                     </ul>
                 </div>
             </div>
@@ -538,35 +685,35 @@
         <!-- IMPLEMENTATION PROCESS -->
         <section>
             <div class="section-title">
-                <h2>Deployment Roadmap</h2>
-                <p>From initial database analysis to fully automated XML generation within 10 days.</p>
+                <h2>Deployment Process</h2>
+                <p>From initial database audit to fully automated XML generation within 10 days.</p>
             </div>
 
             <div class="process-steps">
                 <div class="step-card">
                     <div class="step-num">Step 01</div>
                     <h4>Database Audit</h4>
-                    <p>We review your DBF/SQL structure and verify that all mandatory invoice fields are accessible.</p>
+                    <p>We inspect your DBF/SQL structure and verify the availability of all required invoice fields.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-num">Step 02</div>
                     <h4>Connector Development</h4>
-                    <p>We write a custom script mapped to your exact fields and configure strict XML schema validation.</p>
+                    <p>We write a custom script tailored to your schema and set up strict XML validation rules.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-num">Step 03</div>
-                    <h4>Staging Test</h4>
-                    <p>We run the integration in a test environment to verify XML validity against national validation tools.</p>
+                    <h4>Staging & Testing</h4>
+                    <p>We run the integration in a test environment to validate XML against official validator tools.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-num">Step 04</div>
-                    <h4>Production Launch</h4>
-                    <p>Background automation is enabled. Your system emits compliant e-invoices with zero manual intervention.</p>
+                    <h4>Production Release</h4>
+                    <p>Background automation is activated. Your system issues valid e-invoices without manual intervention.</p>
                 </div>
             </div>
         </section>
 
-        <!-- CONTACT SECTION -->
+        <!-- CONTACT BOX -->
         <section id="contact-sec">
             <div class="contact-box">
                 <h2>Verify Your System Compatibility</h2>
@@ -585,6 +732,23 @@
                         📋 Copy Email to Clipboard
                     </button>
                 </div>
+            </div>
+        </section>
+
+        <!-- FEEDBACK BOX -->
+        <section>
+            <div class="feedback-box">
+                <p style="font-size:18px; font-weight:600; color:#ffffff; margin-bottom:10px;">
+                    Tried the software?
+                </p>
+                <p style="font-size:15px; color:#9ca3af; margin-bottom:15px;">
+                    If you used the demo or have another problem you wish a simple local tool could solve, reach out directly:
+                </p>
+                <p style="font-size:17px; font-weight:bold; margin:0;">
+                    <a href="mailto:krsoft.tools@gmail.com" style="color:#60A5FA; text-decoration:none;">
+                        krsoft.tools@gmail.com
+                    </a>
+                </p>
             </div>
         </section>
 
@@ -611,23 +775,22 @@
         }
 
         function openEmail() {
-            window.location.href = 'mailto:krsoft.tools@gmail.com';
+            window.location.href = "mailto:krsoft.tools@gmail.com?subject=Inquiry%20about%20e-invoice%20integration";
         }
 
         function copyEmail() {
-            const email = 'krsoft.tools@gmail.com';
+            const email = "krsoft.tools@gmail.com";
             navigator.clipboard.writeText(email).then(() => {
                 const btn = document.getElementById('copy-btn');
-                btn.innerText = '✅ Address Copied!';
-                btn.style.borderColor = '#10B981';
-                btn.style.color = '#10B981';
+                const originalText = btn.innerText;
+                btn.innerText = "✓ Copied!";
+                btn.style.borderColor = "#10B981";
+                btn.style.color = "#10B981";
                 setTimeout(() => {
-                    btn.innerText = '📋 Copy Email to Clipboard';
-                    btn.style.borderColor = '';
-                    btn.style.color = '';
-                }, 3000);
-            }).catch(err => {
-                alert('Email address: krsoft.tools@gmail.com');
+                    btn.innerText = originalText;
+                    btn.style.borderColor = "";
+                    btn.style.color = "";
+                }, 2000);
             });
         }
     </script>
